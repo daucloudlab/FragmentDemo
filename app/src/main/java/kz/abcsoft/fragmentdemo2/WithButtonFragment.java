@@ -31,6 +31,21 @@ public class WithButtonFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("counter", mCounter);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState == null)
+            mCounter = 0 ;
+        else
+            mCounter = savedInstanceState.getInt("counter", 0) ;
+    }
+
+    @Override
     public void onClick(View v) {
         mCounter++;
         mCommunicator.count("Я насчитал " + mCounter + " котов");
