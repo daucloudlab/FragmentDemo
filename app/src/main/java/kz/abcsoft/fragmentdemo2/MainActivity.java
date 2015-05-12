@@ -2,14 +2,18 @@ package kz.abcsoft.fragmentdemo2;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity implements OnSelectedButtonListener {
+
+    private boolean mIsDynamic;
 
     @Override
     public void onSelectedButton(int buttonIndex) {
@@ -22,6 +26,18 @@ public class MainActivity extends Activity implements OnSelectedButtonListener {
             startActivity(intent) ;
         }else{
             fragment2.setDescription(buttonIndex);
+        }
+        mIsDynamic = fragment2 == null || !fragment2.isInLayout();
+        Toast.makeText(getApplicationContext(), mIsDynamic + "", Toast.LENGTH_SHORT).show();
+        // Зная, что второго фрагмента нет, загружаем первый
+        if (mIsDynamic) {
+            // начинаем транзакцию
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            // Создаем и добавляем первый фрагмент
+            Fragment1 fragment1 = new Fragment1();
+            ft.add(R.id.container, fragment1, "fragment1");
+            // Подтверждаем операцию
+            ft.commit();
         }
     }
 
