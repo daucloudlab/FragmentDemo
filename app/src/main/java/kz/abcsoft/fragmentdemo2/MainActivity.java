@@ -27,7 +27,20 @@ public class MainActivity extends Activity implements OnSelectedButtonListener {
         }else{
             fragment2.setDescription(buttonIndex);
         }
-        mIsDynamic = fragment2 == null || !fragment2.isInLayout();
+
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        Fragment2 fragment2 = (Fragment2) fragmentManager
+                .findFragmentById(R.id.fragment2);
+
+        mIsDynamic = (fragment2 == null || !fragment2.isInLayout());
         Toast.makeText(getApplicationContext(), mIsDynamic + "", Toast.LENGTH_SHORT).show();
         // Зная, что второго фрагмента нет, загружаем первый
         if (mIsDynamic) {
@@ -39,12 +52,6 @@ public class MainActivity extends Activity implements OnSelectedButtonListener {
             // Подтверждаем операцию
             ft.commit();
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
     }
 
     @Override
