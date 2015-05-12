@@ -12,6 +12,11 @@ import android.widget.TextView;
 
 public class Fragment2 extends Fragment {
 
+    // Имя для аргумента
+    public static final String BUTTON_INDEX = "button_index";
+    // Значение по умолчанию
+    private static final int BUTTON_INDEX_DEFAULT = -1;
+
     private TextView mInfoTextView ;
     private ImageView mCatImageView ;
     private String [] mCatDescriptionArray ;
@@ -25,6 +30,14 @@ public class Fragment2 extends Fragment {
         mCatImageView = (ImageView) rootView.findViewById(R.id.imageView1);
 
         mCatDescriptionArray = getResources().getStringArray(R.array.cats) ;
+
+        // Получим индекс, если имеется
+        Bundle args = getArguments();
+        int buttonIndex = args != null ? args.getInt(BUTTON_INDEX,
+                BUTTON_INDEX_DEFAULT) : BUTTON_INDEX_DEFAULT;
+        // Если индекс обнаружен, то используем его
+        if (buttonIndex != BUTTON_INDEX_DEFAULT)
+            setDescription(buttonIndex);
         return rootView ;
     }
 
